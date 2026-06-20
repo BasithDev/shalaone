@@ -1,0 +1,157 @@
+@import "tailwindcss";
+
+/*
+  Academic Flux design system — see DESIGN.md
+  Tokens are exposed to Tailwind v4 via @theme inline so utilities like
+  bg-surface, text-on-surface, bg-primary, border-outline-variant work directly.
+*/
+
+:root {
+  /* Surfaces */
+  --surface: #f9f9ff;
+  --surface-dim: #d3daea;
+  --surface-bright: #f9f9ff;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f0f3ff;
+  --surface-container: #e7eefe;
+  --surface-container-high: #e2e8f8;
+  --surface-container-highest: #dce2f3;
+  --surface-variant: #dce2f3;
+
+  --on-surface: #151c27;
+  --on-surface-variant: #464555;
+  --inverse-surface: #2a313d;
+  --inverse-on-surface: #ebf1ff;
+
+  --outline: #777587;
+  --outline-variant: #c7c4d8;
+  --surface-tint: #4d44e3;
+
+  /* Primary — Trust Indigo */
+  --primary: #3525cd;
+  --on-primary: #ffffff;
+  --primary-container: #4f46e5;
+  --on-primary-container: #dad7ff;
+  --inverse-primary: #c3c0ff;
+
+  /* Secondary — Coral Energy */
+  --secondary: #a93349;
+  --on-secondary: #ffffff;
+  --secondary-container: #fe7488;
+  --on-secondary-container: #730425;
+
+  /* Tertiary — Warm Amber */
+  --tertiary: #684000;
+  --on-tertiary: #ffffff;
+  --tertiary-container: #885500;
+  --on-tertiary-container: #ffd4a4;
+
+  /* Status */
+  --error: #ba1a1a;
+  --on-error: #ffffff;
+  --error-container: #ffdad6;
+  --on-error-container: #93000a;
+
+  --background: #f9f9ff;
+  --on-background: #151c27;
+}
+
+@theme inline {
+  --font-sans: var(--font-plus-jakarta-sans);
+
+  --color-surface: var(--surface);
+  --color-surface-dim: var(--surface-dim);
+  --color-surface-bright: var(--surface-bright);
+  --color-surface-container-lowest: var(--surface-container-lowest);
+  --color-surface-container-low: var(--surface-container-low);
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-high: var(--surface-container-high);
+  --color-surface-container-highest: var(--surface-container-highest);
+  --color-surface-variant: var(--surface-variant);
+
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-variant: var(--on-surface-variant);
+  --color-inverse-surface: var(--inverse-surface);
+  --color-inverse-on-surface: var(--inverse-on-surface);
+
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
+  --color-surface-tint: var(--surface-tint);
+
+  --color-primary: var(--primary);
+  --color-on-primary: var(--on-primary);
+  --color-primary-container: var(--primary-container);
+  --color-on-primary-container: var(--on-primary-container);
+  --color-inverse-primary: var(--inverse-primary);
+
+  --color-secondary: var(--secondary);
+  --color-on-secondary: var(--on-secondary);
+  --color-secondary-container: var(--secondary-container);
+  --color-on-secondary-container: var(--on-secondary-container);
+
+  --color-tertiary: var(--tertiary);
+  --color-on-tertiary: var(--on-tertiary);
+  --color-tertiary-container: var(--tertiary-container);
+  --color-on-tertiary-container: var(--on-tertiary-container);
+
+  --color-error: var(--error);
+  --color-on-error: var(--on-error);
+  --color-error-container: var(--error-container);
+  --color-on-error-container: var(--on-error-container);
+
+  --color-background: var(--background);
+  --color-on-background: var(--on-background);
+
+  /* Shape language — rounded "Modern Soft" */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+
+  /* Ambient, indigo-tinted elevation */
+  --shadow-soft: 0px 4px 20px rgba(53, 37, 205, 0.06);
+  --shadow-soft-lg: 0px 12px 32px rgba(53, 37, 205, 0.1);
+}
+
+body {
+  background: var(--background);
+  color: var(--on-background);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* Modern "sheen" gradient for primary actions (DESIGN.md › Buttons) */
+.bg-primary-sheen {
+  background-image: linear-gradient(180deg, #5b52ea 0%, var(--primary-container) 45%, var(--primary) 100%);
+}
+
+/* Lightweight markdown styling for AI chat answers (no typography plugin needed) */
+.chat-md > :first-child { margin-top: 0; }
+.chat-md > :last-child { margin-bottom: 0; }
+.chat-md p { margin: 0.6em 0; line-height: 1.6; }
+.chat-md h1, .chat-md h2, .chat-md h3 {
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 1em 0 0.4em;
+  color: var(--on-surface);
+}
+.chat-md h1 { font-size: 1.15rem; }
+.chat-md h2 { font-size: 1.05rem; }
+.chat-md h3 { font-size: 1rem; }
+.chat-md ul, .chat-md ol { margin: 0.5em 0; padding-left: 1.4em; }
+.chat-md ul { list-style: disc; }
+.chat-md ol { list-style: decimal; }
+.chat-md li { margin: 0.25em 0; line-height: 1.55; }
+.chat-md strong { font-weight: 700; color: var(--on-surface); }
+.chat-md code {
+  background: var(--surface-container-high);
+  padding: 0.1em 0.35em;
+  border-radius: 0.3rem;
+  font-size: 0.9em;
+}
+.chat-md a { color: var(--primary); text-decoration: underline; }
+.chat-md blockquote {
+  border-left: 3px solid var(--outline-variant);
+  padding-left: 0.9em;
+  margin: 0.6em 0;
+  color: var(--on-surface-variant);
+}

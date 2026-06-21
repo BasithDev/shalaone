@@ -115,7 +115,7 @@ Create a `.env` file in the project root (see `.env.example`):
 2. **Enable pgvector:** SQL Editor → run `create extension if not exists vector;`
 3. **Push the schema:** `pnpm drizzle-kit push` (creates all tables from `src/db/schema.ts`).
 4. **Create the vector + FK indexes:** run the contents of `src/db/indexes.sql` in the SQL Editor (HNSW indexes for fast similarity search).
-5. **(Optional) Apply RLS policies:** run `src/db/rls.sql`.
+5. **Apply RLS policies (required):** run `src/db/rls.sql`. This is a **security requirement** — the anon key is public, so without RLS the auto-generated REST API would expose your tables. The app uses the direct Postgres connection (which bypasses RLS), so this doesn't affect functionality.
 6. **Create storage buckets** (Storage → New bucket):
    - `books` — **public**
    - `notes` — **private**
@@ -150,6 +150,7 @@ pnpm build        # production build
 pnpm start        # run the production build
 pnpm lint         # eslint
 pnpm typecheck    # tsc --noEmit
+pnpm test         # run the Vitest unit tests
 ```
 
 ---
@@ -230,7 +231,7 @@ This is an MVP built on a tight timeline. The choices below were deliberate — 
 ### Things we'd add with more time
 - **OCR for image notes** — uploaded **images** are stored but not text-extracted, so only **PDF** notes become AI-searchable. (Textbook scans *are* OCR'd on the admin side.) The same Gemini OCR could be wired into note images later.
 - **Admin management UI** — promoting a user to admin is done via SQL; there's no admin-management screen yet.
-- **Automated tests** — verification was manual (typecheck + build + manual flows). No unit/E2E suite yet.
+- **Automated tests** — there's a Vitest unit suite for core pure logic (chunking, OCR page-parsing, Zod validation schemas, the `cn` util); run with `pnpm test`. Integration/E2E tests (e.g. Playwright) are not set up yet.
 - **Richer analytics** — current analytics are point-in-time counts; time-series trends and per-student drill-downs aren't built.
 - **Quiz coverage for huge chapters** — for chapters larger than the prompt budget, quiz generation **samples** chunks rather than doing hierarchical summarization, so very large chapters may not be fully represented.
 - **Dashboard query** — `getSubjectProgress` runs one query per subject (N+1); fine at this scale, but it should be flattened for large datasets.

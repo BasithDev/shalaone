@@ -36,7 +36,7 @@ export async function extractPdfTextWithGemini(buffer: Buffer): Promise<string[]
 
 // Split the model output on the ===PAGE n=== markers. Order is preserved, so the
 // array index maps to the page number (matching how chunkPages numbers pages).
-function splitPages(text: string): string[] {
+export function splitPages(text: string): string[] {
   const pages = text
     .split(/===PAGE\s+\d+===/i)
     .map((p) => p.trim())

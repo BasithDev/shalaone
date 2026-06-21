@@ -3,6 +3,9 @@ import { redirect } from "next/navigation";
 import { GraduationCap, LogOut } from "lucide-react";
 import { AdminNav } from "./components/AdminNav";
 import { logout } from "@/app/(student)/settings/actions";
+import { db } from "@/lib/db";
+import { profiles } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
 function Brand() {
   return (
@@ -34,6 +37,15 @@ export default async function AdminLayout({
 
   if (!user) {
     redirect("/login");
+  }
+
+  // Defense in depth: verify the admin role here too, not just in middleware.
+  const [profile] = await db
+    .select({ role: profiles.role })
+    .from(profiles)
+    .where(eq(profiles.id, user.id));
+  if (profile?.role !== "admin") {
+    redirect("/dashboard");
   }
 
   return (
